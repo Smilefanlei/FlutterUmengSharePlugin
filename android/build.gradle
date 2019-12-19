@@ -1,0 +1,80 @@
+group 'cn.mryt.sxws.mryt_share_plugin'
+version '1.0.0'
+
+buildscript {
+    ext.kotlin_version = '1.3.41'
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    defaultConfig {
+        minSdkVersion 16
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation files('libs/umeng-common-2.1.8.jar')
+    implementation files('libs/umeng-share-core-6.9.6.jar')
+    implementation files('libs/umeng-sharetool-6.9.6.jar')
+
+    implementation files('libs/umeng-share-QQ-full-6.9.6.jar')
+    implementation files('libs/open_sdk_r5990_lite.jar')
+
+    implementation files('libs/umeng-share-sina-full-6.9.6.jar')
+    implementation files('libs/weiboSDKCore.jar')
+
+    implementation files('libs/wechat-sdk-android-without-mta-5.1.4.jar')
+    implementation files('libs/umeng-share-wechat-full-6.9.6.jar')
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+}
